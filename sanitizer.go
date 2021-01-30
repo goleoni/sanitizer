@@ -58,21 +58,18 @@ func (Sanitizer) Sanitize(s interface{}) {
 					if fieldVal.Kind() == reflect.String {
 						stringVal := fieldVal.String()
 
-						if key == "firstword" {
+						switch key {
+						case "firstword":
 							separatedWord := strings.Split(stringVal, wordSeparator)
 							fieldVal.SetString(separatedWord[0])
-						}
-
-						if key == "length" {
+						case "length":
 							i, err := strconv.Atoi(value)
 							if err != nil {
 								log.Fatal("length should be a string:", err)
 							}
 
 							fieldVal.SetString(firstCharactersString(stringVal, i))
-						}
-
-						if key == "initial" {
+						case "initial":
 							if stringVal == "" {
 								fieldVal.SetString(value)
 							}
